@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Пользователи</title>
+    </head>
+    <body>
+        <div>
+            <h1><a href="/">Список</a></h1>
+        </div>
+
+        {% for member in members %}
+		    <div>
+		    	      	      
+		        <p>         <b>user_ID</b> в Telegram:  {{ member.telegram_user_id }}</p>
+		        <p>       <b>user_name</b> в Telegram:  {{ member.telegram_user_name }}</p>
+		        <p>                     Статус:  {{ member.id_state }}</p>  	        
+		        <p>Внутреннее имя пользователя:  {{ member.user_name }}</p>
+		        <p>   Дата и время регистрации:  {{ member.registered_date }}</p>	       
+		    </div>
+		{% endfor %}
+    </body>
+</html>

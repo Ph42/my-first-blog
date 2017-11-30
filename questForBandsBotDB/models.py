@@ -11,7 +11,11 @@ class state_of_team(models.Model):
 		(HAVE_NO_ACTIVE_QUESTS, 'нет активных квестов'),
 		(DELETED, 'удалена'),		
 		)
-	description = models.CharField(max_length = 50, choices = CHOICES, default = HAVE_NO_ACTIVE_QUESTS)
+	descript = models.CharField(max_length = 50, choices = CHOICES, default = HAVE_NO_ACTIVE_QUESTS, unique = True)
+	def publish(self):
+		self.save()
+	def __str__(self):
+		return self.descript
 
 class state_of_member(models.Model):
 	ACTIVE = 'ACTIVE'
@@ -20,7 +24,11 @@ class state_of_member(models.Model):
 		(ACTIVE, 'активен'),
 		(DELETED, 'удалён'),			
 		)
-	description = models.CharField(max_length = 50, choices = CHOICES, default = ACTIVE)
+	descript = models.CharField(max_length = 50, choices = CHOICES, default = ACTIVE, unique = True)
+	def publish(self):
+		self.save()
+	def __str__(self):
+		return self.descript
 
 class state_of_team_member(models.Model):
 	ACTIVE = 'ACTIVE'
@@ -33,30 +41,41 @@ class state_of_team_member(models.Model):
 		(DELETED_FROM_TEAM, 'удалён из команды'),	
 		(TEAM_DELETED, 'команда удалена'),
 		)
-	description = models.CharField(max_length = 50, choices = CHOICES, default = ACTIVE)
+	descript = models.CharField(max_length = 50, choices = CHOICES, default = ACTIVE, unique = True)
+	def publish(self):
+		self.save()
+	def __str__(self):
+		return self.descript
 
 class member(models.Model):
-	id_state = models.ForeignKey('state_of_member')
+	id_state = models.ForeignKey('state_of_member', default = state_of_member.objects.get(descript = 'ACTIVE').id, on_delete = models.PROTECT)
+	telegram_user_id = models.IntegerField(default = -1, unique = True)
+	telegram_user_name = models.CharField(max_length = 50, unique = True)
+	user_name = models.CharField(max_length = 50, blank = True)
+	registered_date = models.DateTimeField(default = timezone.now)
+	def publish(self):
+		self.save()
+	def __str__(self):
+		return self.telegram_user_name
 
 class team(models.Model):
-    id_captain = models.ForeignKey('member')
-    id_state = models.ForeignKey('state_of_team')
-    '''
-    text = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(
-            default=timezone.now)
-    published_date = models.DateTimeField(
-            blank=True, null=True)
+	id_captain = models.ForeignKey('member')
+	id_state = models.ForeignKey('state_of_team', default = state_of_team.objects.get(descript = 'HAVE_NO_ACTIVE_QUESTS').id, on_delete = models.PROTECT)
+	name = models.CharField(max_length = 15, blank = True, unique = True)
+	created_date = models.DateTimeField(default = timezone.now)
+	descript = models.TextField(blank = True)
+    
+	def publish(self):
+		self.save()
+	def __str__(self):
+		return self.name
 
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
-
-    def __str__(self):
-        return self.title
-    '''
 class team_member(models.Model):	
 	id_team = models.ForeignKey('team')
 	id_member = models.ForeignKey('member')
-	id_state = models.ForeignKey('state_of_team_member')
+	id_state = models.ForeignKey('state_of_team_member', default = state_of_team_member.objects.get(descript = 'ACTIVE').id, on_delete = models.PROTECT)
+	def publish(self):
+		self.save()
+	def __str__(self):
+		s = str(team.objects.get(pk = self.id_team.id).name) + '.' + str(member.objects.get(pk = self.id_member.id).telegram_user_name)
+		return s
