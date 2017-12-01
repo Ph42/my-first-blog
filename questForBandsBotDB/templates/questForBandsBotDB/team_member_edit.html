@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Пользователи</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <style>
+            .inline {display:inline-block; margin: 0 0 0 2%}
+        </style>
+    </head>
+    <body>
+        
+        <div class = "inline">
+            <h3><a href="/member_list">Пользователи</a></h3>
+        </div>
+        <div class = "inline">
+            <h3><a href="/team_list">Команды</a></h3> 
+        </div>
+         <div class = "inline">
+            <h3><a href="/team_member_list">Поользователи команд</a></h3> 
+        </div>
+        <h1>Добавить пользователя в команду</h1>
+        <form method="POST" class="post-form">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Добавить</button>
+        </form>
+    </body>
+</html>

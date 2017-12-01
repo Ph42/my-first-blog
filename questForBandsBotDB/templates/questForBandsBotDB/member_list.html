@@ -1,20 +1,37 @@
 <html>
     <head>
         <title>Пользователи</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<style>
+			.inline {display:inline-block; margin: 0 0 0 2%}
+		</style>
     </head>
     <body>
+    	
+    	<div class = "inline">
+            <h3>Участники</h3>
+        </div>
+        <div class = "inline">
+            <h3><a href="/team_list">Команды</a></h3> 
+        </div>
+         <div class = "inline">
+            <h3><a href="/team_member_list">Участники команд</a></h3> 
+        </div>
         <div>
-            <h1><a href="/">Список</a></h1>
+            <h3><a href="/">Участники</a></h3>
+            <h3><a <a href="{% url 'member_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Добавить</a></h3>            
         </div>
 
         {% for member in members %}
 		    <div>
-		    	      	      
-		        <p>         <b>user_ID</b> в Telegram:  {{ member.telegram_user_id }}</p>
+		    	<pre>  </pre>    	      
+		        <p>        <b>user_ID</b> в Telegram:  {{ member.telegram_user_id }}</p>
 		        <p>       <b>user_name</b> в Telegram:  {{ member.telegram_user_name }}</p>
 		        <p>                     Статус:  {{ member.id_state }}</p>  	        
 		        <p>Внутреннее имя пользователя:  {{ member.user_name }}</p>
 		        <p>   Дата и время регистрации:  {{ member.registered_date }}</p>	       
+		    	<h7><a href="/">>Удалить</a></h7>
 		    </div>
 		{% endfor %}
     </body>

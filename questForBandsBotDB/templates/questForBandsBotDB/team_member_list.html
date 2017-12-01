@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Пользователи</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<style>
+			.inline {display:inline-block; margin: 0 0 0 2%}
+		</style>
+    </head>
+    <body>
+    	
+    	<div class = "inline">
+            <h3><a href="/member_list">Участники</a></h3>
+        </div>
+        <div class = "inline">
+            <h3><a href="/team_list">Команды</a></h3> 
+        </div>
+         <div class = "inline">
+            <h3>Участники команд</h3> 
+        </div>
+        <div>
+            <h3><a href="/">Участники команд</a></h3>
+            <h3><a <a href="{% url 'team_member_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Добавить</a></h3>            
+        </div>
+
+        {% for team_member in team_members %}
+		    <div>
+		    	<pre>  </pre>    	      
+		        <p>        <b>ID команды</b>:  {{ team_member.id_team }}</p>
+		        <p>       <b>ID участника</b>:  {{ team_member.id_member }}</p>
+                <p>       Статус:  {{ team_member.id_state }}</p>
+                
+                <h7><a href="/">Удалить</a></h7>
+		    </div>
+		{% endfor %}
+    </body>
+</html>

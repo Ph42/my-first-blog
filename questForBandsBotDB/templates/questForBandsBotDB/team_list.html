@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Команды</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<style>
+			.inline {display:inline-block; margin: 0 0 0 2%;}			
+		</style>
+    </head>
+    <body>
+    	<div class = "inline">
+            <h3><a href="/member_list">Участники</a></h3>
+        </div>
+        <div class = "inline">
+            <h3>Команды</h3> 
+        </div>
+         <div class = "inline">
+            <h3><a href="/team_member_list">Участники команд</a></h3> 
+        </div>       
+        <div>
+            <h3><a href="/">Команды</a><h3>
+            <h3><a <a href="{% url 'team_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Добавить</a></h3>
+        </div>
+
+        {% for team in teams %}
+		    <div>
+		    	<pre>  </pre>     	      
+		        <p><b>Имя команды</b>:  {{ team.name }}</p>
+		        <p>       		       <b>Капитан</b>:  {{ team.id_captain }}</p>
+		        <p>                     Статус:  {{ team.id_state }}</p>  	        
+		        <p>Дата создания:  {{ team.created_date }}</p>
+		        <p>   Описание:  {{ team.descript }}</p>	       
+		    </div>
+		{% endfor %}
+    </body>
+</html>
